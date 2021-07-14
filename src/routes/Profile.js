@@ -1,0 +1,52 @@
+import React, { useState } from "react";
+import { authService } from "fbase";
+import { useHistory } from "react-router-dom";
+
+// authService의 signOut을 통해 로그아웃 기능을 구현할 수 있다.
+// 로그아웃 해도 profile 컴포넌트 내부에 있어선 안돼기에 history를 통해 뒤로 보낸다.(usehistory를 통해 생성)
+// eslint-disable-next-line import/no-anonymous-default-export
+export default ({ refreshUser, userObj }) => {
+  const history = useHistory();
+  const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+  const onLogOutClick = () => {
+    authService.signOut();
+    history.push("/");
+  };
+  // const getMyNweets = async () => {
+  //   const nweets = await dbService
+  //     .collection("nweets")
+  //     .where("creatorId", "==", userObj.uid)
+  //     .orderBy("createAt")
+  //     .get();
+  //   console.log(nweets.docs.map((doc) => doc.data()));
+  // };
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewDisplayName(value);
+  };
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    if (userObj.displayName !== newDisplayName) {
+      // updateProfile은 두가지를 업데이트 할 수 있게 해준다. displayName과 photoURL이다.
+      await userObj.updateProfile({ displayName: newDisplayName });
+      refreshUser();
+    }
+  };
+
+  return (
+    <>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          type="text"
+          placeholder="Display name"
+          value={newDisplayName}
+        />
+        <input type="submit" value="Update Profile" />
+      </form>
+      <button onClick={onLogOutClick}>Log Out</button>
+    </>
+  );
+};
