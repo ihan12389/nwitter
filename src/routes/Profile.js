@@ -31,7 +31,7 @@ export default ({ refreshUser, userObj }) => {
     if (userObj.displayName !== newDisplayName) {
       // updateProfile은 두가지를 업데이트 할 수 있게 해준다. displayName과 photoURL이다.
       await userObj.updateProfile({ displayName: newDisplayName });
-      // refreshUser();
+      refreshUser();
     }
   };
 

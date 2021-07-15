@@ -9,10 +9,10 @@ const NweetFactory = ({ userObj }) => {
   const [attachment, setAttachment] = useState("");
   const fileInput = useRef();
   const onSubmit = async (event) => {
+    event.preventDefault();
     if (nweet === "") {
       return;
     }
-    event.preventDefault();
     let attachmentUrl = "";
     if (attachment !== "") {
       const attachmentRef = storageService
@@ -26,6 +26,7 @@ const NweetFactory = ({ userObj }) => {
       createAt: Date.now(),
       creatorId: userObj.uid,
       attachmentUrl,
+      userName: userObj.displayName,
     };
     await dbService.collection("nweets").add(nweetObj);
     setNweet("");
@@ -67,6 +68,7 @@ const NweetFactory = ({ userObj }) => {
           type="text"
           placeholder="What's on your mind?"
           maxLength={120}
+          autoFocus
         />
         <input type="submit" value="&rarr;" className="factoryInput__arrow" />
       </div>
@@ -82,6 +84,7 @@ const NweetFactory = ({ userObj }) => {
         style={{
           opacity: 0,
         }}
+        ref={fileInput}
       />
       {attachment && (
         <div className="factoryForm__attachment">
