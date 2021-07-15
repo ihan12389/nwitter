@@ -8,7 +8,6 @@ firebase의 기능을 사용하여 twitter의 간단한 기능을 구현하는 �
 <br><br>
 프로젝트의 진행 상황은 전부 블로그에 정리해놨습니다.<br>
 https://blog.naver.com/ihan128
-<br>
 <br><br>
-아래는 프로젝트의 호스팅 주소입니다.
+아래는 프로젝트의 호스팅 주소입니다.<br>
 https://ihan12389.github.io/nwitter/
